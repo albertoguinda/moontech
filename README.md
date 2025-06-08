@@ -118,7 +118,7 @@ prueba-tecnica-moontech/
     PORT=3000
     ```
 
-4. **Pobla la base de datos con el usuario administrador**
+4. **Poblar la base de datos con el usuario administrador**
     ```bash
     cd backend
     npx ts-node src/utils/seed.ts
@@ -154,7 +154,7 @@ prueba-tecnica-moontech/
 - Base de datos: MongoDB Atlas, base `moontechdb`, colecciones `users` y `logs`.
 - Todo el código sigue buenas prácticas de arquitectura y seguridad.
 - Consulta VERSIONS.md para versiones y dependencias detalladas.
-- Para cualquier duda técnica o de acceso, contacta conmigo en [albertoguinda@gmail.com](mailto:albertoguinda@gmail.com).
+- Para cualquier duda técnica o de acceso, contacta conmigo en [albertoguindasevilla@gmail.com](mailto:albertoguindasevilla@gmail.com).
 
 ---
 
