@@ -1,0 +1,92 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 flex flex-col items-center justify-start py-8">
+  <div class="w-full max-w-4xl bg-gray-900 rounded-2xl shadow-lg p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-100">Usuarios</h2>
+      <div class="flex gap-3">
+        <button
+          (click)="goToLogs()"
+          class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow"
+        >
+          Ver logs
+        </button>
+        <button
+          (click)="logout()"
+          class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow"
+        >
+          Salir
+        </button>
+      </div>
+    </div>
+
+    <!-- FORMULARIO -->
+    <form class="flex flex-wrap gap-4 mb-6 items-end" (ngSubmit)="addOrUpdateUser()">
+      <input [(ngModel)]="userForm.nombre" name="nombre" placeholder="Nombre"
+        class="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-200 focus:ring focus:ring-blue-500" required />
+      <input [(ngModel)]="userForm.email" name="email" placeholder="Email" type="email"
+        class="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-200 focus:ring focus:ring-blue-500" required />
+      <input [(ngModel)]="userForm.password" name="password" placeholder="Contraseña" type="password"
+        [required]="!userForm._id"
+        class="flex-1 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-200 focus:ring focus:ring-blue-500" />
+      <label class="flex items-center gap-2 text-gray-300">
+        <input type="checkbox" [(ngModel)]="userForm.activo" name="activo"
+          class="rounded text-blue-600 focus:ring-blue-500" />
+        Activo
+      </label>
+      <button type="submit"
+        class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition">
+        {{ userForm._id ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" *ngIf="userForm._id" (click)="resetForm()"
+        class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg shadow">
+        Cancelar
+      </button>
+    </form>
+
+    <!-- TABLA USUARIOS -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-800">
+        <thead>
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-bold text-gray-400 uppercase">Nombre</th>
+            <th class="px-6 py-3 text-left text-xs font-bold text-gray-400 uppercase">Email</th>
+            <th class="px-6 py-3 text-left text-xs font-bold text-gray-400 uppercase">Activo</th>
+            <th class="px-6 py-3 text-center text-xs font-bold text-gray-400 uppercase">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-800">
+          <tr *ngFor="let u of users" class="hover:bg-gray-800 transition">
+            <td class="px-6 py-4 font-medium text-gray-100">{{ u.nombre }}</td>
+            <td class="px-6 py-4 text-gray-300">{{ u.email }}</td>
+            <td class="px-6 py-4">
+              <span [ngClass]="u.activo ? 'bg-green-800 text-green-300' : 'bg-red-900 text-red-300'"
+                class="px-3 py-1 rounded-full text-xs font-semibold">
+                {{ u.activo ? 'Sí' : 'No' }}
+              </span>
+            </td>
+            <td class="px-6 py-4 flex gap-3 justify-center">
+              <!-- Editar -->
+              <button (click)="editUser(u)" title="Editar"
+                class="hover:text-blue-300 text-gray-400 transition">
+                <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 20 20">
+                  <path d="M11.05 3L4.21 10.24c-.26.28-.51.82-.56 1.19l-.31 2.7c-.11 1.09.59 1.76 1.56 1.59l2.68-.46c.37-.07.89-.34 1.15-.63l6.84-7.24c1.18-1.25 1.71-2.68-.06-4.42-1.84-1.72-3.23-1.09-4.36.17z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9.91 4.21C10.27 6.51 12.13 8.27 14.45 8.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M2.5 18.33h15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <!-- Borrar -->
+              <button (click)="deleteUser(u._id)" title="Borrar"
+                class="hover:text-red-400 text-gray-400 transition">
+                <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 20 20">
+                  <path d="M17.5 4.98c-2.78-.27-5.57-.41-8.35-.41-1.65 0-3.3.08-4.95.24L2.5 4.98" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M7.08 4.14l.18-1.09c.13-.79.23-1.38 1.64-1.38h2.18c1.41 0 1.51.62 1.64 1.39l.18 1.09" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15.71 7.62l-.54 8.39c-.09 1.31-.18 2.32-2.51 2.32H7.33c-2.33 0-2.41-1.01-2.5-2.32l-.54-8.39" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8.61 13.75h2.77M7.92 10.42h4.17" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
