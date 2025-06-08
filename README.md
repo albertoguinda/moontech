@@ -7,7 +7,7 @@ Backend en Node.js + Express, base de datos MongoDB Atlas, frontend en Angular.
 
 ## Estructura de carpetas
 
-´´´
+```bash
 
 prueba-tecnica-moontech/
 │
@@ -84,6 +84,8 @@ prueba-tecnica-moontech/
 ├── tailwind.config.js
 ├── README.md
 └── VERSIONS.md
+
+```
 
 ---
 
